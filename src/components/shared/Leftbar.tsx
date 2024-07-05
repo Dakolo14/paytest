@@ -10,7 +10,7 @@ const Leftbar = () => {
   return (
     <nav className="leftsidebar">
       <div className="flex flex-col gap-11">
-        <Link to='/' className='flex gap-3 items-center'>
+        <Link to='/home' className='flex gap-3 items-center'>
           <img src="/assets/images/logo.png" alt="logo" width={150} height={30} />
         </Link>
         {/* {This image should be connected to user profile image} */}

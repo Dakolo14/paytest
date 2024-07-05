@@ -66,14 +66,14 @@ const SigninForm = () => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="shad-button_primary">
-            <Link to='/'>
+          <Button type="submit" className="shad-button_primary mt-4">
+            <Link to='/home'>
               {isLoading ? (
                 <div className="flex-center gap-2">
                   <Loader />
                   Loading...
                 </div>
-              ) : "Create Account"}
+              ) : "Sign In"}
             </Link>
           </Button>
           <p className="text-small-regular text-light-2 text-center mt-2">
