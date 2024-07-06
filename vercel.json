@@ -1,0 +1,15 @@
+{
+    "rewrites": [
+      { "source": "/signin", "destination": "/" },
+      { "source": "/signup", "destination": "/" },
+      { "source": "/about", "destination": "/" },
+      { "source": "/howto", "destination": "/" },
+      { "source": "/developer", "destination": "/" },
+      { "source": "/home", "destination": "/" },
+      { "source": "/cards", "destination": "/" },
+      { "source": "/transaction", "destination": "/" },
+      { "source": "/profile", "destination": "/" },
+      { "source": "/update-profile/:id", "destination": "/" }
+    ]
+  }
+  
