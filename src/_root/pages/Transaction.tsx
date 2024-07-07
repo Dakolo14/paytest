@@ -69,7 +69,7 @@ const Transaction = () => {
       <div>
         <h3 className='h3-bold md:h2-bold text-left w-full py-4 px-6'>Recent Transactions</h3>
       </div>
-      <div className='p-3'>
+      <div className="w-screen">
         <Table>
           <TableCaption>A list of your recent transactions.</TableCaption>
           <TableHeader>

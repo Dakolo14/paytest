@@ -22,7 +22,10 @@ const Profile = () => {
         <h3 className='h3-bold md:h2-bold text-left w-full py-4 px-6'>Your Profile</h3>
         <Dialog>
           <DialogTrigger asChild>
-              <img src="/assets/icons/edit.svg" width={26} height={26} alt="Edit Profile Icon" />
+              <span className="flex flex-col items-center">
+                <img src="/assets/icons/edit.svg" width={26} height={26} alt="Edit Profile Icon" />
+                <p className="text-sm">Edit</p>
+              </span>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
@@ -71,7 +74,10 @@ const Profile = () => {
         </Dialog>
         <Dialog>
           <DialogTrigger asChild>
-              <img src="/assets/icons/share.svg" width={40} height={40} alt="Edit Profile Icon" />
+              <span className="flex flex-col items-center">
+                <img src="/assets/icons/share.svg" width={26} height={26} alt="Edit Profile Icon" />
+                <p className="text-sm">Share</p>
+              </span>
           </DialogTrigger>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
@@ -92,7 +98,7 @@ const Profile = () => {
                   readOnly
                 />
               </div>
-              <Button type="submit" size="sm" className="px-3">
+              <Button type="submit" size="icon" className="px-3">
                 <span className="sr-only">Copy</span>
                 <Copy className="h-4 w-4" />
               </Button>
@@ -117,7 +123,7 @@ const Profile = () => {
               className="shad-input"
               readOnly
             />
-            <Button type="submit" size="sm" className="px-1">
+            <Button type="submit" size="icon" className="px-1">
               <span className="sr-only">Copy</span>
               <Copy className="h-4 w-4" />
             </Button>
@@ -133,7 +139,7 @@ const Profile = () => {
               className="shad-input"
               readOnly
             />
-            <Button type="submit" size="sm" className="px-1">
+            <Button type="submit" size="icon" className="px-1">
               <span className="sr-only">Copy</span>
               <Copy className="h-4 w-4" />
             </Button>
@@ -149,7 +155,7 @@ const Profile = () => {
               className="shad-input"
               readOnly
             />
-            <Button type="submit" size="sm" className="px-1">
+            <Button type="submit" size="icon" className="px-1">
               <span className="sr-only">Copy</span>
               <Copy className="h-4 w-4" />
             </Button>
@@ -166,14 +172,14 @@ const Profile = () => {
               readOnly
               disabled
             />
-            <Button type="submit" size="sm" className="px-1">
+            <Button type="submit" size="icon" className="px-1">
               <span className="sr-only">Copy</span>
               <Copy className="h-4 w-4" />
             </Button>
           </div>
         </div>
 
-        <div className="space-y-4 md:space-y-0 md:space-x-4">
+        <div className="py-8 space-y-4 md:space-y-0 md:space-x-4">
           <Link to='/' className='flex-center gap-3'>
             <Button className="w-[200px] md:w-1/3">Logout</Button>
           </Link>
