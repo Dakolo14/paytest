@@ -78,3 +78,5 @@ Check out our live application only built for mobile devices. <a href="https://p
 - [x] Cards "/cards"
 - [x] Transactions "transaction"
 - [x] Me "/profile"
+
+## Routing was fixed by creating a vercel.json file to store all routes to the main destination.
