@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Link } from "react-router-dom"
 
 
 const Profile = () => {
@@ -170,6 +171,12 @@ const Profile = () => {
               <Copy className="h-4 w-4" />
             </Button>
           </div>
+        </div>
+
+        <div className="space-y-4 md:space-y-0 md:space-x-4">
+          <Link to='/' className='flex-center gap-3'>
+            <Button className="w-[200px] md:w-1/3">Logout</Button>
+          </Link>
         </div>
       </div>
     </div>

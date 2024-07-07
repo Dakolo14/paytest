@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input"
 import { SignupValidation as SignupValidation } from "@/lib/validation";
 import Loader from "@/components/shared/Loader";
 import { Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
 
 
@@ -37,6 +38,14 @@ const SignupForm = () => {
 
   return (
       <Form {...form}>
+        <Link to="/">
+          <Button
+            className="fixed top-12 left-5 opacity-100 shadow-md bg-neutral-600"
+            size="icon"
+          >
+            <ArrowLeft className="h-4 w-4" />
+          </Button>
+        </Link>
         <div className="sm:w-420 flex-center flex-col">
           <img src="/assets/images/logo.png" alt="logo" />
 

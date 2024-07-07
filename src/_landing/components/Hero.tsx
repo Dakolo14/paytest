@@ -21,11 +21,11 @@ const Hero = () => {
         </main>
 
         <p className="text-sm text-muted-foreground md:w-10/12 mx-auto lg:mx-0 text-gray-300">
-          Unlock the Power of Tap-to-Pay with our App: Enjoy the Ultimate Convenience and Security in Mobile Payments. Make Purchases, Send Money, Pay Bills and More, Effortlessly and Securely from your phone
+          Unlock the Power of Tap-to-Pay with our App
         </p>
 
         <div className="space-y-4 md:space-y-0 md:space-x-4">
-          <Link to='/home'>
+          <Link to='/signup' className='flex-center gap-3'>
             <Button className="w-[200px] md:w-1/3">Create Account</Button>
           </Link>
         </div>
@@ -33,7 +33,7 @@ const Hero = () => {
 
       {/* Image by right side section */}
       <div className="z-10">
-        <img src="./assets/images/side-img.png" className="w-full h-fit" alt="" />
+        <img src="./assets/images/side-img.png" className="w-full h-auto" alt="Picture of Tap to Pay" />
       </div>
 
     </section>

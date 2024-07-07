@@ -47,28 +47,28 @@ import {
         "What should I do if I lose my phone?",
       answer:
         "If you lose your phone, contact our support team immediately to suspend your account and prevent unauthorized transactions. You can also use our website to suspend/manage your card.",
-      value: "item-5",
+      value: "item-6",
     },
     {
       question:
         "Can I add multiple bank cards to Payfly?",
       answer:
         "Yes, you can add multiple bank cards to Payfly and choose which one to use for each transaction.",
-      value: "item-5",
+      value: "item-7",
     },
     {
       question:
         "How do I set up security measures on Payfly?",
       answer:
         "During the setup process, you will be prompted to choose a PIN, fingerprint, or facial recognition for added security. You can also adjust these settings in the app's security section.",
-      value: "item-5",
+      value: "item-8",
     },
     {
       question:
         "How does Payfly protect my privacy?",
       answer:
         "Payfly is committed to protecting your privacy. We use encryption and other security measures to safeguard your personal and financial information. Your data is never shared without your consent.",
-      value: "item-5",
+      value: "item-9",
     },
   ];
   
@@ -108,7 +108,8 @@ import {
           Still have questions?{" "}
           <a
             rel="noreferrer noopener"
-            href=""
+            target="_blank"
+            href="https://api.whatsapp.com/send?phone=09059428941"
             className="text-primary-500 transition-all border-primary hover:border-b-2"
           >
             Contact us

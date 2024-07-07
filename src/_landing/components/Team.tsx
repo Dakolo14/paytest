@@ -10,7 +10,6 @@ import {
 import { Facebook, Instagram, Linkedin } from "lucide-react";
 
 interface TeamProps {
-  imageUrl: string;
   name: string;
   position: string;
   description: string;
@@ -24,7 +23,6 @@ interface SociaNetworkslProps {
 
 const teamList: TeamProps[] = [
   {
-    imageUrl: "https://i.pravatar.cc/150?img=35",
     name: "Hafiz Magaji",
     position: "Co-Founder & CEO",
     description: "Hafiz brings a wealth of experience in fintech and a passion for innovation. He leads our vision and strategy, ensuring we stay at the forefront of mobile payment technology.",
@@ -41,7 +39,6 @@ const teamList: TeamProps[] = [
     ],
   },
   {
-    imageUrl: "https://i.pravatar.cc/150?img=60",
     name: "Ajose Damilare",
     position: "Co-Founder & COO",
     description: "With a strong background in operations and customer experience, John ensures our services run smoothly and efficiently. His focus is on delivering exceptional user satisfaction.",
@@ -58,7 +55,6 @@ const teamList: TeamProps[] = [
     ],
   },
   {
-    imageUrl: "https://i.pravatar.cc/150?img=36",
     name: "Tunde Samuel",
     position: "Chief Technology Officer",
     description: "Samuel is the tech genius behind our app. With his extensive expertise in software development and cybersecurity, he ensures our platform is secure, reliable, and cutting-edge.",
@@ -105,17 +101,12 @@ export const Team = () => {
 
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 gap-y-10">
         {teamList.map(
-          ({ imageUrl, name, position, description, socialNetworks }: TeamProps) => (
+          ({ name, position, description, socialNetworks }: TeamProps) => (
             <Card
               key={name}
               className="bg-gray-950 border-none relative mt-8 flex flex-col justify-center items-center"
             >
               <CardHeader className="mt-8 flex justify-center items-center pb-2">
-                <img
-                  src={imageUrl}
-                  alt={`${name} ${position}`}
-                  className="absolute -top-12 rounded-full w-24 h-24 aspect-square object-cover"
-                />
                 <CardTitle className="text-center">{name}</CardTitle>
                 <CardDescription className="text-primary">
                   {position}

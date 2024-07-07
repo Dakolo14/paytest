@@ -22,7 +22,7 @@ const features: FeatureProps[] = [
       "Enhance your protection by setting up a PIN, fingerprint, or facial recognition.",
   },
   {
-    title: "Pay Using NFCs",
+    title: "Tap to Pay",
     description:
       "Simply tap your phone at any NFC-enabled terminal to make quick and secure payments.",
   },
