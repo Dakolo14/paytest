@@ -1,0 +1,9 @@
+export { default as UserDetails } from './UserDetails';
+export { default as ResetPin } from './ResetPin';
+export { default as Referrals } from './Referrals';
+export { default as HelpSupport } from './HelpSupport';
+export { default as WhatsNew } from './WhatsNew';
+export { default as Faq } from './Faq';
+export { default as Terms } from './Terms';
+export { default as PrivacyPolicy } from './PrivacyPolicy';
+export { default as Notification } from './Notification';

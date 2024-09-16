@@ -1,50 +1,50 @@
+import { IoWalletOutline } from "react-icons/io5";
+import { TiChartPieOutline } from "react-icons/ti";
+import { GoHome } from "react-icons/go";
+import { HiOutlineUser } from "react-icons/hi2";
+
 export const sidebarLinks = [
     {
-      imgURL: "/assets/icons/home.svg",
+      icon: GoHome,
       route: "/home",
       label: "Home",
     },
     {
-      imgURL: "/assets/icons/wallpaper.svg",
+      icon: IoWalletOutline,
       route: "/cards",
       label: "Cards",
     },
     {
-      imgURL: "/assets/icons/people.svg",
+      icon: TiChartPieOutline,
       route: "/transaction",
       label: "Transactions",
     },
     {
-      imgURL: "/assets/icons/bookmark.svg",
+      icon: HiOutlineUser,
       route: "/profile",
-      label: "Me",
-    },
-    {
-      imgURL: "/assets/icons/gallery-add.svg",
-      route: "/update-profile/:id",
-      label: "Update Profile",
+      label: "Profile",
     },
   ];
   
   export const bottombarLinks = [
     {
-      imgURL: "/assets/icons/home.svg",
+      icon: GoHome,
       route: "/home",
       label: "Home",
     },
     {
-      imgURL: "/assets/icons/wallpaper.svg",
+      icon: IoWalletOutline,
       route: "/cards",
       label: "Cards",
     },
     {
-      imgURL: "/assets/icons/people.svg",
+      icon: TiChartPieOutline,
       route: "/transaction",
       label: "Transactions",
     },
     {
-      imgURL: "/assets/icons/bookmark.svg",
+      icon: HiOutlineUser,
       route: "/profile",
-      label: "Me",
+      label: "Profile",
     },
   ];

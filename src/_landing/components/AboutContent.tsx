@@ -7,7 +7,7 @@ export const AboutContent = () => {
       className="container py-24 sm:py-32"
     >
       <div className="bg-gray-950 border rounded-lg py-12">
-        <div className="px-6 flex flex-col-reverse md:flex-row gap-8 md:gap-12">
+        <div className="px-6 flex items-center flex-col-reverse md:flex-row gap-8 md:gap-12">
           <img
             src='/assets/images/scan.png'
             alt=""
@@ -22,7 +22,7 @@ export const AboutContent = () => {
                 PayFly
               </h2>
               <p className="text-md text-muted-foreground mt-4 text-gray-300">
-                At PayFly, we're dedicated to making payments easier for everyone in Nigeria. Our innovative mobile payment app offers a seamless and secure way to make purchases. We prioritize convenience and security, ensuring you can manage your finances effortlessly. Join us in transforming the future of payments in Nigeria. Simplify your financial life with Konga.
+                At PayFly, we're dedicated to making payments easier for everyone in Nigeria. Our innovative mobile payment app offers a seamless and secure way to make purchases. We prioritize convenience and security, ensuring you can manage your finances effortlessly. Join us in transforming the future of payments in Nigeria. Simplify your financial life with PayFly.
               </p>
             </div>
 

@@ -15,7 +15,6 @@ module.exports = {
       padding: '2rem',
       screens: {
         '2xl': '1400px',
-      
       },
     },
     extend: {
@@ -33,6 +32,11 @@ module.exports = {
         'light-2': '#EFEFEF',
         'light-3': '#7878A3',
         'light-4': '#5C5C7B',
+        'red-200': '#fee2e2',
+        'red-800': '#991b1b'
+      },
+      padding: {
+        unset: 'unset',
       },
       screens: {
         'xs': '480px',
@@ -43,7 +47,7 @@ module.exports = {
         '465': '465px',
       },
       fontFamily: {
-        inter: ['Inter', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
 
       },
       keyframes: {

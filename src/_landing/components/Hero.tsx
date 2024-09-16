@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
+import Lottie from 'lottie-react'
+import Scan from "@/scan.json";
 
 const Hero = () => {
   return (
@@ -24,16 +26,17 @@ const Hero = () => {
           Unlock the Power of Tap-to-Pay with our App
         </p>
 
-        <div className="space-y-4 md:space-y-0 md:space-x-4">
-          <Link to='/signup' className='flex-center gap-3'>
-            <Button className="w-[200px] md:w-1/3">Create Account</Button>
+        <div className="space-y-4 md:space-y-0 md:space-x-4 w-full">
+          <Link to='/signup' className='flex-center gap-3 w-full'>
+            <Button className="w-[200px] md:w-full">Create Account</Button>
           </Link>
         </div>
       </div>
 
       {/* Image by right side section */}
       <div className="z-10">
-        <img src="./assets/images/side-img.png" className="w-full h-auto" alt="Picture of Tap to Pay" />
+        {/* <img src="./assets/images/side-img.png" className="w-full h-auto" alt="Picture of Tap to Pay" /> */}
+        <Lottie animationData={Scan} loop={true} />
       </div>
 
     </section>

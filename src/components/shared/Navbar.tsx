@@ -42,10 +42,10 @@ const routeList: RouteProps[] = [
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
-    <header className="sticky top-0 z-50 w-full dark:border-b-slate-700 bg-black py-3">
+    <header className="fixed top-0 z-50 w-full dark:border-b-slate-700 bg-black py-3 mb-4">
       <NavigationMenu className="mx-auto">
         <NavigationMenuList className="container h-14 px-4 w-screen flex justify-between ">
-          <NavigationMenuItem className="font-bold flex">
+          <NavigationMenuItem className="font-bold flex items-center justify-between w-full">
             <a
               rel="noreferrer noopener"
               href="/"
@@ -55,10 +55,42 @@ export const Navbar = () => {
                     <img src="/assets/images/logo.png" alt="logo" width={150} height={30} />
                 </Link>
             </a>
+
+
+            {/* Desktop Nav - Hidden on Mobile */}
+            <nav className="hidden lg:flex justify-center items-center gap-4 mt-4">
+              {routeList.map(({ href, label }: RouteProps) => (
+                <a
+                  rel="noreferrer noopener"
+                  key={label}
+                  href={href}
+                  onClick={() => setIsOpen(false)}
+                  className={buttonVariants({ variant: "ghost" })}
+                >
+                  {label}
+                </a>
+              ))}
+              <Link
+                to="/signin"
+                className={`w-[110px] ${buttonVariants({
+                  variant: "white",
+                })}`}
+              >
+                Login
+              </Link>
+              <Link
+                to="/signup"
+                className={`w-[110px]  ${buttonVariants({
+                  variant: "default",
+                })}`}
+              >
+                Register
+              </Link>
+            </nav>
           </NavigationMenuItem>
 
           {/* mobile */}
-          <span className="flex md:hidden">
+          <span className="flex lg:hidden">
 
             <Sheet
               open={isOpen}
@@ -66,7 +98,7 @@ export const Navbar = () => {
             >
               <SheetTrigger className="px-2">
                 <Menu
-                  className="flex md:hidden h-5 w-5"
+                  className="flex lg:hidden h-5 w-5"
                   onClick={() => setIsOpen(true)}
                 >
                   <span className="sr-only">Menu Icon</span>

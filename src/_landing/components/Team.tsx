@@ -99,7 +99,7 @@ export const Team = () => {
         Passionate Innovators Dedicated to Transforming Your Payment Experience
       </p>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 gap-y-10">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 gap-y-10">
         {teamList.map(
           ({ name, position, description, socialNetworks }: TeamProps) => (
             <Card

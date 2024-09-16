@@ -10,15 +10,21 @@ const Bottombar = () => {
       {bottombarLinks.map((link) => {
 
       const isActive = pathname === link.route;
+      const Icon = link.icon; // Use the icon component
 
       return (
           <Link to={link.route} key={link.label} className={`${
-            isActive && 'bg-primary-500 rounded-[10px]'
-          } flex-center flex-col gap-1 px-5 py-3 transition`}>
-            <img src={link.imgURL} alt={link.label} width={20} height={20} className={`${
-              isActive && 'invert-white'
-            }`} />
-            <p className='tiny-medium text-light-2'>
+              isActive ? 'rounded-[10px]' : ''
+            } flex-center flex-col gap-1 px-5 py-3 transition`}>
+             <Icon
+                size={20}
+                className={`${
+                  isActive ? 'text-primary-500' : 'text-light-2'
+                }`}
+              />
+            <p className={`${
+                isActive ? 'text-primary-500 tiny-medium text-light-2' : 'tiny-medium text-light-2'
+              }`}>
               {link.label}
             </p>
           </Link>

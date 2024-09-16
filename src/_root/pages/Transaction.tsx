@@ -1,105 +1,128 @@
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import Lottie from "lottie-react";
+import Parrot from "@/Parrot.json";
+import { Payment, columns } from "@/_root/payments/Column";
+import { DataTable } from "@/_root/payments/DataTable";
 
- 
-
-const Transaction = () => {
-
-  const invoices = [
+async function getData(): Promise<Payment[]> {
+  return [
     {
-      invoice: "INV001",
-      paymentStatus: "Paid",
-      totalAmount: "₦50000.00",
-      paymentMethod: "Credit Card",
+      id: "728ed52fg",
+      amount: 100,
+      status: "failed",
+      bankName: "Standard Chartered",
     },
     {
-      invoice: "INV002",
-      paymentStatus: "Pending",
-      totalAmount: "₦85000.00",
-      paymentMethod: "PayPal",
+      id: "728ed52f",
+      amount: 1232300,
+      status: "success",
+      bankName: "Access Bank",
     },
     {
-      invoice: "INV003",
-      paymentStatus: "Unpaid",
-      totalAmount: "₦2400.00",
-      paymentMethod: "Bank Transfer",
+      id: "728ed52f",
+      amount: 100,
+      status: "success",
+      bankName: "Access Bank",
     },
     {
-      invoice: "INV004",
-      paymentStatus: "Paid",
-      totalAmount: "₦34400.00",
-      paymentMethod: "Credit Card",
+      id: "728ed52f",
+      amount: 100,
+      status: "success",
+      bankName: "Standard Chartered",
     },
     {
-      invoice: "INV005",
-      paymentStatus: "Paid",
-      totalAmount: "₦230000.00",
-      paymentMethod: "PayPal",
+      id: "728ed52f",
+      amount: 100,
+      status: "pending",
+      bankName: "Access Bank",
     },
     {
-      invoice: "INV006",
-      paymentStatus: "Pending",
-      totalAmount: "₦20000.00",
-      paymentMethod: "Bank Transfer",
+      id: "728ed52f",
+      amount: 100,
+      status: "success",
+      bankName: "Standard Chartered",
     },
     {
-      invoice: "INV007",
-      paymentStatus: "Unpaid",
-      totalAmount: "₦3000.00",
-      paymentMethod: "Credit Card",
+      id: "728ed52f",
+      amount: 100,
+      status: "success",
+      bankName: "Standard Chartered",
     },
-  ]
-
-  const totalAmount = invoices.reduce((total, invoice) => {
-    // Remove currency symbol and convert to number
-    const amount = parseFloat(invoice.totalAmount.replace(/[^\d.-]/g, ''));
-    return total + amount;
-  }, 0);
-
-  return (
-    <div>
-      <div>
-        <h3 className='h3-bold md:h2-bold text-left w-full py-4 px-6'>Recent Transactions</h3>
-      </div>
-      <div className="w-screen">
-        <Table>
-          <TableCaption>A list of your recent transactions.</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px]">Invoice</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Method</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {invoices.map((invoice) => (
-              <TableRow key={invoice.invoice}>
-                <TableCell className="font-medium">{invoice.invoice}</TableCell>
-                <TableCell>{invoice.paymentStatus}</TableCell>
-                <TableCell>{invoice.paymentMethod}</TableCell>
-                <TableCell className="text-right">{invoice.totalAmount}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TableCell colSpan={3}>Total</TableCell>
-              <TableCell className="text-right">₦{totalAmount.toFixed(2)}</TableCell>
-            </TableRow>
-          </TableFooter>
-        </Table>
-      </div>
-    </div>
-  )
+    {
+      id: "728ed52f",
+      amount: 100,
+      status: "success",
+      bankName: "Access Bank",
+    },
+    {
+      id: "728ed52f",
+      amount: 100,
+      status: "failed",
+      bankName: "Standard Chartered",
+    },
+    {
+      id: "728ed52f",
+      amount: 100,
+      status: "pending",
+      bankName: "Standard Chartered",
+    },
+    {
+      id: "728ed52f",
+      amount: 100,
+      status: "pending",
+      bankName: "Ecobank",
+    },
+    // More sample data...
+  ];
 }
 
-export default Transaction
+const Transaction = () => {
+  const [transactionAdded, setTransactionAdded] = useState(true);
+  const [data, setData] = useState<Payment[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const result = await getData();
+      setData(result);
+    }
+    fetchData();
+  }, []);
+
+  return (
+    <div className="w-full my-5 px-4">
+      <div className="flex flex-col items-start w-full gap-5">
+        <h3 className="text-2xl font-semibold text-left w-full py-4">
+          Your Transactions
+        </h3>
+
+        <div className="text-white rounded-md" style={{ marginTop: "12px", paddingBottom: "32px" }}>
+          {transactionAdded ? (
+            <div className="flex gap-6 flex-col flex-1 min-h-screen pb-32">
+              <div className="flex flex-col items-center">
+                <Lottie animationData={Parrot} loop={true} className="lg:w-[500px]" />
+                <p className="mt-2 text-md text-gray-300 text-center">
+                  You don’t have any active transactions. Add your card to transact on Payfly.
+                </p>
+              </div>
+              <Link
+                to="/cards"
+                className="bg-white hover:bg-slate-500 text-center text-black mt-3 font-semibold py-3 px-4 rounded-md"
+              >
+                Add Bank Card
+              </Link>
+            </div>
+          ) : (
+            <div>
+              <div>
+                <DataTable columns={columns} data={data} />
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Transaction;

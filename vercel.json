@@ -9,7 +9,16 @@
       { "source": "/cards", "destination": "/" },
       { "source": "/transaction", "destination": "/" },
       { "source": "/profile", "destination": "/" },
-      { "source": "/update-profile/:id", "destination": "/" }
+      { "source": "/update-profile/:id", "destination": "/" },
+      { "source": "/user-details", "destination": "/" },
+      { "source": "/reset-pin", "destination": "/" },
+      { "source": "/referrals", "destination": "/" },
+      { "source": "/help", "destination": "/" },
+      { "source": "/whats-new", "destination": "/" },
+      { "source": "/faq", "destination": "/" },
+      { "source": "/terms-of-use", "destination": "/" },
+      { "source": "/privacy-policy", "destination": "/" },
+      { "source": "/notification", "destination": "/" }
     ]
   }
   
