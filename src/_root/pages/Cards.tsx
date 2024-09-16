@@ -19,7 +19,7 @@ import { Switch } from "@/components/ui/switch";
 
 
 interface Card {
-  id: number; 
+  id: number;
   bank_name: string;
   card_number: string;
   expiry_month: string;
@@ -34,10 +34,9 @@ const Cards = () => {
   const { user } = useUser();
   const [cards, setCards] = useState<Card[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [passwordview, setPasswordView] = useState(true)
-  const [isPrimaryAccount, setIsPrimaryAccount] = useState(true);
-  const [showDialog, setShowDialog] = useState<boolean>(false);
-  const [newCard, setNewCard] = useState<Card | null>(null);
+  const [passwordview] = useState(true)
+  const [isPrimaryAccount] = useState(true);
+  const [_newCard, setNewCard] = useState<Card | null>(null);
 
   const bankLogos: BankLogos = {
     UBA: "https://blockchainbinaryopt.shop/payfly/bankLogos/uba.png",
@@ -103,7 +102,6 @@ const Cards = () => {
         };
         setCards([...cards, newCardData]);
         setNewCard(newCardData);
-        setShowDialog(false); // Close the dialog
       } else {
         alert(response.data.error);
       }
@@ -203,7 +201,7 @@ const Cards = () => {
                                 </div>
                               </div>
                               <div className="flex justify-between items-center mt-4">
-                                <span className="text-lg font-medium uppercase">{user.first_name} {user.last_name}</span>
+                                <span className="text-lg font-medium uppercase">{user?.first_name} {user?.last_name}</span>
                                 <img src="/assets/images/visa.png" alt="Card Type" className="h-8 w-12" />
                               </div>
                             </div>
@@ -254,7 +252,7 @@ const Cards = () => {
                                 <p className="text-sm text-left text-gray-400">
                                   Account Name
                                 </p>
-                                <span className="text-lg font-medium uppercase">{user.first_name} {user.last_name}</span>
+                                <span className="text-lg font-medium uppercase">{user?.first_name} {user?.last_name}</span>
                               </div>
                             </div>
 
@@ -299,7 +297,7 @@ const Cards = () => {
               </div>
             ))}
             {/* Button to add a new card */}
-            <Button onClick={() => setShowDialog(true)} className="bg-white w-full text-black mt-6 rounded-md p-2">
+            <Button className="bg-white w-full text-black mt-6 rounded-md p-2">
               Add Another Card
             </Button>
           </div>

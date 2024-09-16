@@ -8,8 +8,10 @@ import { useUser } from '@/context/UserContexts';
 
 
 const Referrals = () => {
-  const { user, setUser } = useUser();
-  const [isLoading, setIsLoading] = useState(false);
+  // const { user, setUser } = useUser();
+  const { user } = useUser();
+  const [isLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div className='lg:flex lg:flex-col lg:items-center'>

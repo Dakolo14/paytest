@@ -1,16 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
   Drawer,
   DrawerClose,
   DrawerContent,
@@ -20,8 +10,6 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
 import { useUser } from '@/context/UserContexts';
 import axios from 'axios';
@@ -45,8 +33,8 @@ const avatars = [
 
 const Profile: React.FC = () => {
   const { user, setUser } = useUser();
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [selectedAvatar, setSelectedAvatar] = useState(user?.avatar || '');
+  const [_isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedAvatar, setSelectedAvatar] = useState(user?.profile_picture || '');
   const [isLoading, setIsLoading] = useState(false);
 
   if (!user) {
@@ -54,8 +42,8 @@ const Profile: React.FC = () => {
   }
 
   // Set initial state with user's data
-  const [username, setUsername] = useState<string>(user.username);
-  const [address, setAddress] = useState<string>(user.address || '');
+  const [username] = useState<string>(user.username);
+  const [address] = useState<string>(user.address || '');
 
   const handleSaveChanges = async () => {
     if (!user.id) {
@@ -73,7 +61,7 @@ const Profile: React.FC = () => {
 
       if (response.data.success) {
         // Update the user context with the new data
-        setUser({ ...user, username, address, avatar: selectedAvatar });
+        setUser({ ...user, username, address, profile_picture: selectedAvatar });
         setIsEditModalOpen(false); // Close the modal
       } else {
         // Handle error response

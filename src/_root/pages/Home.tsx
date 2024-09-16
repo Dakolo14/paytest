@@ -31,12 +31,12 @@ const cardColors = ['bg-blue-500', 'bg-green-500', 'bg-pink-500', 'bg-yellow-500
 
 const Home = () => {
   const { user } = useUser();
-  const [cards, setCards] = useState<Card[]>([]);
-  const [selectedCard, setSelectedCard] = useState<Card | null>(null);
+  const [_cards, setCards] = useState<Card[]>([]);
+  const [_selectedCard, setSelectedCard] = useState<Card | null>(null);
   const [notifications] = useState(1);
-  const [cardAdded, setCardAdded] = useState(true);
-  const [cardColorMap, setCardColorMap] = useState<{ [key: number]: string }>({});
-  const [isPrimaryAccount, setIsPrimaryAccount] = useState(true);
+  const [cardAdded] = useState(true);
+  const [_cardColorMap, setCardColorMap] = useState<{ [key: number]: string }>({});
+  const [isPrimaryAccount] = useState(true);
 
   useEffect(() => {
     if (user) {
@@ -72,26 +72,26 @@ const Home = () => {
     }
   }, [user]);
 
-  const handleCardSwitch = (card: Card) => {
-    setSelectedCard(card);
-  };
+  // const handleCardSwitch = (card: Card) => {
+  //   setSelectedCard(card);
+  // };
 
   /* if (!user) {
     return <p>Loading...</p>; // Or handle it in a different way
   } */
 
   // Filter the cards to exclude the selected card
-  const otherCards = cards.filter(card => card.id !== selectedCard?.id);
+  // const otherCards = cards.filter(card => card.id !== selectedCard?.id);
 
 
   const bankName = 'Bank Name';
   const cardNumber = '**** **** **** **38';
   const cvv = '***';
   const expiryDate = '**/**';
-  const accounts = [
-    { id: 1, name: 'Primary Account', isActive: true },
-    { id: 2, name: 'Secondary Account', isActive: false },
-  ];
+  // const accounts = [
+  //   { id: 1, name: 'Primary Account', isActive: true },
+  //   { id: 2, name: 'Secondary Account', isActive: false },
+  // ];
 
 
   return (

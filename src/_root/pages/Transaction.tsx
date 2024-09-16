@@ -78,7 +78,7 @@ async function getData(): Promise<Payment[]> {
 }
 
 const Transaction = () => {
-  const [transactionAdded, setTransactionAdded] = useState(true);
+  const [transactionAdded] = useState(true);
   const [data, setData] = useState<Payment[]>([]);
 
   useEffect(() => {

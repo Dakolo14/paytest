@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -19,7 +18,7 @@ import axios from 'axios';
 
 const UserDetails: React.FC = () => {
   const { user, setUser } = useUser();
-  const [isVerified, setIsVerified] = useState(true);
+  const [isVerified] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 

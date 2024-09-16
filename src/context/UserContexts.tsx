@@ -10,6 +10,8 @@ interface User {
   email: string;
   profile_picture: string;
   address: string;
+  phone?: string;
+  date_of_birth?: string;
   // Add any other user properties you need
 }
 

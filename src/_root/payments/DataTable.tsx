@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { IoIosArrowBack, IoIosArrowForward, IoIosArrowDown  } from "react-icons/io";
+import { IoIosArrowDown  } from "react-icons/io";
 import { PiListMagnifyingGlassLight } from "react-icons/pi";
 
 
