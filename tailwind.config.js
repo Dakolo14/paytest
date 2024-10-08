@@ -39,8 +39,8 @@ module.exports = {
         unset: 'unset',
       },
       screens: {
-        'xs': '480px',
-      
+        'xs': '320px',
+        
       },
       width: {
         '420': '420px',

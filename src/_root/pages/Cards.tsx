@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
-import { useUser } from "@/context/UserContexts";
+import { useUser } from "@/lib/context/UserContexts";
 import NoCard from "../components/NoCard";
 import { ImBin } from "react-icons/im";
 import {
@@ -62,15 +62,17 @@ const Cards = () => {
       const fetchCards = async () => {
         try {
           const response = await axios.get(`https://blockchainbinaryopt.shop/payfly/backend/api/get_cards.php?user_id=${user.id}`);
-          setCards(response.data.cards);
+          console.log('Fetched cards:', response.data.cards); // Log the response to ensure data is correct
+          setCards(response.data.cards || []); // Ensure cards is set to an array
         } catch (error) {
           console.error('Error fetching cards:', error);
         }
       };
-
+  
       fetchCards();
     }
   }, [user]);
+  
 
   const handleAddCard = async (bankName: string, cardNumber: string, expiryMonth: string, cvv: string) => {
     if (!user) return;
@@ -137,16 +139,17 @@ const Cards = () => {
     }
   };
 
-  const bankNameCard = 'Bank Name';
-  const cardNumberCard = '**** **** **** **38';
+  //const bankNameCard = 'Bank Name';
+  //const cardNumberCard = '**** **** **** **38';
   const cvvCard = '***';
-  const expiryDateCard = '**/**';
+  //const //expiryDateCard = '**/**';
 
   return (
     <div className="w-full my-5 px-4">
       <div className="flex flex-col items-start w-full gap-5">
         <h3 className='text-2xl font-semibold text-left w-full py-4'>Your Cards</h3>
-        {cards.length > 0 ? (
+
+        {cards?.length > 0 ? (
           <div className="w-full">
             {cards.map((card) => (
               <div key={card.id} className="w-[100%] rounded-lg my-0.2 p-4 flex items-center justify-between space-x-4" style={{ backgroundColor: "#1e1e1e" }}>
@@ -182,13 +185,14 @@ const Cards = () => {
                         <div>
                           {/* ATM CARD DESIGN */}
                           <div className="mx-4 my-4">
+                            {cards.map(card => (
                             <div className="bg-gray-800 rounded-lg p-5 relative w-full">
                               <div className="flex justify-between items-start">
-                                <span className="text-md font-medium">{bankNameCard}</span>
+                                <span className="text-md font-medium">{card?.bank_name}</span>
                                 <img src={`/assets/images/payment-tag.png`} alt="NFC" className="h-8 w-8" />
                               </div>
                               <div className="text-lg tracking-widest mt-6">
-                                <p style={{ fontSize: '1.5rem' }}>{cardNumberCard.replace(/(\d{4})(?=\d)/g, '$1 ')}</p>
+                                <p style={{ fontSize: '1.5rem' }}>{card?.card_number.replace(/(\d{4})(?=\d)/g, '$1 ')}</p>
                               </div>
                               <div className="flex justify-start gap-4 mt-3">
                                 <div className="flex flex-col">
@@ -197,7 +201,7 @@ const Cards = () => {
                                 </div>
                                 <div className="flex flex-col">
                                   <span className="text-xs">Expires</span>
-                                  <span className="text-sm">{expiryDateCard}</span>
+                                  <span className="text-sm">{card?.expiry_month}</span>
                                 </div>
                               </div>
                               <div className="flex justify-between items-center mt-4">
@@ -205,6 +209,7 @@ const Cards = () => {
                                 <img src="/assets/images/visa.png" alt="Card Type" className="h-8 w-12" />
                               </div>
                             </div>
+                            ))}
                           </div>
                           {/* CARD INFORMATION DESIGN */}
                           <div className="mx-4 my-4">
@@ -220,23 +225,36 @@ const Cards = () => {
                               </div>
                             </div>
 
+                           
                             <div className="w-[100%] rounded-lg p-4 mt-3 flex items-center justify-between" style={{ backgroundColor: "#1e1e1e" }}>
+                            {cards.map(card => (
                               <div>
                                 <p className="text-sm text-left text-gray-400">
                                   Bank Name
                                 </p>
-                                <h2 className="text-lg font-medium text-gray-100">{bankNameCard}</h2>
+                                <h2 className="text-lg font-medium text-gray-100">{card?.bank_name}</h2>
                               </div>
+                            ))}
                             </div>
 
                             <div className="w-[100%] rounded-lg p-4 mt-3 flex items-center justify-between" style={{ backgroundColor: "#1e1e1e" }}>
+                            
+                            {cards.map(card => (
                               <div>
+                              
                                 <p className="text-sm text-left text-gray-400">
                                   Card Number
                                 </p>
-                                <h2 className="text-lg font-medium text-gray-100">{cardNumberCard}</h2>
+                                
+                                <h2 className="text-lg font-medium text-gray-100">
+                                  {passwordview
+              ? card?.card_number // Show full card number
+              : "**** **** **** " + card?.card_number.slice(4)} {/* Show only first 4 digits */}
+              </h2>
                               </div>
+                              ))}
                               <div>
+                                
                                 <div>
                                   {passwordview ? (
                                     <IoMdEye className="h-7 w-7" />
@@ -258,12 +276,14 @@ const Cards = () => {
 
                             <div className="flex items-center space-x-4">
                                 <div className="w-[100%] rounded-lg p-4 mt-3 flex items-center justify-between" style={{ backgroundColor: "#1e1e1e" }}>
+                                  {cards.map(card => (
                                   <div>
                                     <p className="text-sm text-left text-gray-400">
                                       Expiry Date
                                     </p>
-                                    <span className="text-lg font-medium uppercase">{expiryDateCard}</span>
+                                    <span className="text-lg font-medium uppercase">{card?.expiry_month}</span>
                                   </div>
+                                  ))}
                                 </div>
 
                                 <div className="w-[100%] rounded-lg p-4 mt-3 flex items-center justify-between" style={{ backgroundColor: "#1e1e1e" }}>
@@ -276,7 +296,9 @@ const Cards = () => {
                                 </div>
                             </div>
                           </div>
+                       
                         </div>
+                      
                       </DrawerDescription>
                     </div>  
                     <DrawerFooter>
@@ -308,6 +330,5 @@ const Cards = () => {
     </div>
   );
 };
-
 export default Cards;
 

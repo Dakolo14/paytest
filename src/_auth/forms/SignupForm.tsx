@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios'; 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -15,9 +15,12 @@ import { Input } from "@/components/ui/input";
 import Loader from "@/components/shared/Loader";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, ArrowLeft } from "lucide-react";
-import { useUser } from "@/context/UserContexts";
+import { useUser } from "@/lib/context/UserContexts";
 import { useState } from 'react';
 import { SignupValidation } from "@/lib/validation"; // Import your validation schema
+import { toast } from '@/components/ui/use-toast';
+
+
 
 const SignupForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -26,6 +29,7 @@ const SignupForm = () => {
   const navigate = useNavigate();
   const { setUser } = useUser();
 
+  // Form initialization with zod resolver
   const form = useForm<z.infer<typeof SignupValidation>>({
     resolver: zodResolver(SignupValidation),
     defaultValues: {
@@ -35,6 +39,7 @@ const SignupForm = () => {
       email: '',
       password: '',
       password2: '',
+      pin: '' // Default value for pin field
     },
   });
 
@@ -48,6 +53,7 @@ const SignupForm = () => {
       formData.append('email', data.email);
       formData.append('password', data.password);
       formData.append('password2', data.password2);
+      formData.append('pin', data.pin); // Append the PIN field
 
       const response = await axios.post('https://blockchainbinaryopt.shop/payfly/backend/api/signup.php', formData, {
         headers: {
@@ -58,8 +64,17 @@ const SignupForm = () => {
       if (response.data.success) {
         setUser(response.data.user); // Assuming the API returns user data on success
         navigate('/home');
+        toast({
+          variant: 'success',
+          title: 'Successfully Signed Up!',
+        })
       } else {
-        alert(response.data.error || 'An error occurred');
+        // alert(response.data.error || 'An error occurred');
+        toast({
+          variant: 'destructive',
+          title: 'Try Again!',
+          description: 'An error occurred. Please try again.',
+        })
       }
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -184,6 +199,21 @@ const SignupForm = () => {
                       {showConfirmPassword ? <EyeOff /> : <Eye />}
                     </div>
                   </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* PIN Field */}
+          <FormField
+            control={form.control}
+            name="pin"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Transaction PIN</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter a 4-digit PIN" type="password" className="shad-input" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

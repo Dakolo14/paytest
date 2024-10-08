@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { useUser } from '@/context/UserContexts';
+import { useUser } from '@/lib/context/UserContexts';
 
 
 const Referrals = () => {

@@ -17,12 +17,15 @@ import { SigninValidation } from "@/lib/validation";
 import Loader from "@/components/shared/Loader";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import { useUser } from "@/context/UserContexts";
+import { useUser } from "@/lib/context/UserContexts";
+import { useState } from 'react';
+import { useToast } from '@/components/ui/use-toast';
 
 const SigninForm = () => {
-  const isLoading = false;
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { setUser } = useUser();
+  const { toast } = useToast()
 
   const form = useForm<z.infer<typeof SigninValidation>>({
     resolver: zodResolver(SigninValidation),
@@ -33,17 +36,31 @@ const SigninForm = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof SigninValidation>) => {
+    setIsLoading(true);
     try {
       const response = await axios.post('https://blockchainbinaryopt.shop/payfly/backend/api/index.php', data);
       if (response.data.success) {
         setUser(response.data.user); // Assuming the API returns user data on success
         navigate('/home');
+        toast({
+          variant: 'success',
+          title: 'Successfully Logged In!',
+        })
       } else {
-        alert(response.data.error);
+        // alert(response.data.error);
+        toast({
+          variant: 'destructive',
+          title: 'Try Again!',
+          description: 'Invalid email or password',
+        })
+        setIsLoading(false);
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert('An error occurred. Please try again.');
+      // toast({
+      //   variant: 'destructive',
+      //   title: 'Try Again!',
+      // })
     }
   };
 
@@ -90,11 +107,11 @@ const SigninForm = () => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="shad-button_primary mt-4">
+          <Button type="submit" className="shad-button_primary mt-4" disabled={isLoading}>
             {isLoading ? (
               <div className="flex-center gap-2">
                 <Loader />
-                Loading...
+                Signing In...
               </div>
             ) : "Sign In"}
           </Button>

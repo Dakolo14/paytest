@@ -11,10 +11,11 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 import { Link } from "react-router-dom";
-import { useUser } from '@/context/UserContexts';
+import { useUser } from '@/lib/context/UserContexts';
 import axios from 'axios';
 import { GoChevronRight } from "react-icons/go";
 import { Switch } from "@/components/ui/switch";
+import { toast } from '@/components/ui/use-toast';
 
 
 
@@ -34,16 +35,12 @@ const avatars = [
 const Profile: React.FC = () => {
   const { user, setUser } = useUser();
   const [_isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [selectedAvatar, setSelectedAvatar] = useState(user?.profile_picture || '');
+  const [selectedAvatar, setSelectedAvatar] = useState<string>(user?.avatar || avatars[0].src);
   const [isLoading, setIsLoading] = useState(false);
 
   if (!user) {
     return <p>Loading...</p>;
   }
-
-  // Set initial state with user's data
-  const [username] = useState<string>(user.username);
-  const [address] = useState<string>(user.address || '');
 
   const handleSaveChanges = async () => {
     if (!user.id) {
@@ -51,23 +48,29 @@ const Profile: React.FC = () => {
       return;
     }
 
+    setIsLoading(true);
+
     try {
       const response = await axios.post('https://blockchainbinaryopt.shop/payfly/backend/api/update_profile.php', {
         user_id: user.id,
-        username,
-        address,
         avatar: selectedAvatar, // Save the selected avatar
       });
 
       if (response.data.success) {
         // Update the user context with the new data
-        setUser({ ...user, username, address, profile_picture: selectedAvatar });
+        setUser({ ...user, avatar: selectedAvatar });
         setIsEditModalOpen(false); // Close the modal
+        toast({
+          variant: 'success',
+          title: 'Your profile picture has been updated successfully!',
+        })
       } else {
         // Handle error response
       }
     } catch (error) {
-      // Handle error
+      console.error("Error updating profile:", error); // Handle error
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -95,14 +98,14 @@ const Profile: React.FC = () => {
             <div>
               <Drawer>
                   <DrawerTrigger>
-                    <img src={selectedAvatar || './assets/avatar/avatar-4.png'} alt={`${user.first_name}'s Profile Picture`} className='h-32 w-32 border none rounded-md' />
+                    <img src={user?.avatar || 'Not Set'} alt={`${user.first_name}'s Profile Picture`} className='h-32 w-32 border none rounded-md' />
                   </DrawerTrigger>
                   <DrawerContent>
                     <DrawerHeader>
                       <DrawerTitle>
-                        <h2 className="text-lg font-medium text-gray-100">Select Avatar</h2>
+                        <h2 className="text-lg font-medium text-gray-100">View Avatars</h2>
                         <p className="text-sm pt-2 text-gray-400">
-                          Select your avatar to use as your profile picture
+                          Check out all possible avatars available for you.
                         </p>
                       </DrawerTitle>
                     </DrawerHeader>

@@ -2,7 +2,7 @@ import { sidebarLinks } from '@/constants';
 import { INavLink } from '@/types';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
-import { useUser } from '@/context/UserContexts';
+import { useUser } from '@/lib/context/UserContexts';
 import axios from 'axios';
 import { IoLogOutOutline } from "react-icons/io5";
 

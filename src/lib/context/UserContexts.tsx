@@ -1,7 +1,8 @@
 // src/context/UserContext.tsx
-import  { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
 
+// User interface to represent the user object
 interface User {
   id: number;
   first_name: string;
@@ -9,21 +10,23 @@ interface User {
   username: string;
   email: string;
   profile_picture: string;
-  address: string;
+  address?: string;
   phone?: string;
   date_of_birth?: string;
-  // Add any other user properties you need
+  avatar: string;
 }
 
+// User context interface
 interface UserContextType {
   user: User | null;
   setUser: (user: User | null) => void;
   fetchUser: () => void;
 }
 
-
+// Create the UserContext with default undefined value
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
+// Hook to use the UserContext in components
 export const useUser = (): UserContextType => {
   const context = useContext(UserContext);
   if (!context) {
@@ -32,23 +35,26 @@ export const useUser = (): UserContextType => {
   return context;
 };
 
+// UserProvider component that wraps around your app
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
+  // Function to fetch user data from the backend
   const fetchUser = async () => {
     try {
       const response = await axios.get('https://blockchainbinaryopt.shop/payfly/backend/api/current_user.php');
-      if (response.data.user) {
+      if (response.data && response.data.user) {
         setUser(response.data.user);
       } else {
-        setUser(null);
+        setUser(null); // User not found or not logged in
       }
     } catch (error) {
       console.error('Error fetching user:', error);
-      setUser(null);
+      setUser(null); // Set user to null in case of error
     }
   };
 
+  // Fetch the user when the component mounts
   useEffect(() => {
     fetchUser();
   }, []);

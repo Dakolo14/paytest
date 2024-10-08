@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FaBackspace } from "react-icons/fa";
 
-const PinInput: React.FC = () => {
-  const [pin, setPin] = useState('');
+interface PinInputProps {
+  pin: string;
+  setPin: React.Dispatch<React.SetStateAction<string>>;
+  handleBackspace: () => void;
+}
+
+const PinInput: React.FC<PinInputProps> = ({ pin, setPin, handleBackspace }) => {
+
 
   const handleDigitClick = (digit: string) => {
     if (pin.length < 4) {
       setPin(prevPin => prevPin + digit);
     }
-  };
-
-  const handleBackspace = () => {
-    setPin(prevPin => prevPin.slice(0, -1));
   };
 
   return (

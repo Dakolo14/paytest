@@ -1,5 +1,4 @@
 import { IoCalendarOutline } from "react-icons/io5";
-import { GoVerified } from "react-icons/go";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,17 +12,30 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useUser } from "@/context/UserContexts";
+import { useUser } from "@/lib/context/UserContexts";
 import axios from 'axios';
+import { toast } from "@/components/ui/use-toast";
 
 const UserDetails: React.FC = () => {
   const { user, setUser } = useUser();
-  const [isVerified] = useState(true);
+  // const [isVerified] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
+
+  const avatars = [
+    { id: 1, src: './assets/avatar/avatar-1.png', gender: 'female' },
+  { id: 2, src: './assets/avatar/avatar-2.png', gender: 'female' },
+  { id: 3, src: './assets/avatar/avatar-3.png', gender: 'male' },
+  { id: 4, src: './assets/avatar/avatar-4.png', gender: 'male' },
+  { id: 5, src: './assets/avatar/avatar-5.png', gender: 'male' },
+  { id: 6, src: './assets/avatar/avatar-6.png', gender: 'female' },
+  { id: 7, src: './assets/avatar/avatar-7.png', gender: 'male' },
+  { id: 8, src: './assets/avatar/avatar-9.png', gender: 'female' },
+  ];
+
   if (!user) {
-    return <p>Loading...</p>;
+    return <p>Session Expired...</p>;
   }
 
   // State for form inputs
@@ -31,6 +43,7 @@ const UserDetails: React.FC = () => {
   const [address, setAddress] = useState<string>(user.address || '');
   const [phoneNumber, setPhoneNumber] = useState<string>(user.phone || '');
   const [dateOfBirth, setDateOfBirth] = useState<string>(user.date_of_birth || '');
+  const [selectedAvatar, setSelectedAvatar] = useState<string>(user.avatar || avatars[0].src);
 
   const handleSaveChanges = async () => {
     if (!user.id) {
@@ -39,24 +52,39 @@ const UserDetails: React.FC = () => {
 
     setIsLoading(true);
 
+    // Create FormData to handle text data
+    const formData = new FormData();
+    formData.append("user_id", user.id.toString());
+    formData.append("username", username);
+    formData.append("address", address);
+    formData.append("phone", phoneNumber);
+    formData.append("date_of_birth", dateOfBirth);
+    formData.append("avatar", selectedAvatar); // Save selected avatar
+
     try {
-      const response = await axios.post('https://blockchainbinaryopt.shop/payfly/backend/api/update_profile.php', {
-        user_id: user.id,
-        username,
-        address,
-        phone: phoneNumber,
-        date_of_birth: dateOfBirth, // Send updated date of birth
+      const response = await axios.post("https://blockchainbinaryopt.shop/payfly/backend/api/update_profile.php", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
 
       if (response.data.success) {
         // Update user context with new data
-        setUser({ ...user, username, address, phone: phoneNumber, date_of_birth: dateOfBirth });
+        setUser({ ...user, username, address, phone: phoneNumber, date_of_birth: dateOfBirth, avatar: selectedAvatar });
         setIsEditModalOpen(false); // Close the modal
+        toast({
+          variant: 'success',
+          title: 'Your profile has successfully been updated!',
+        })
       } else {
-        // Handle error response
+        // console.error(response.data.error); // Handle error response
+        toast({
+          variant: 'destructive',
+          title: 'Error encounted, Try Again!',
+        })
       }
     } catch (error) {
-      // Handle error
+      console.error("Error updating profile:", error); // Handle error
     } finally {
       setIsLoading(false);
     }
@@ -98,7 +126,7 @@ const UserDetails: React.FC = () => {
             <p className="text-sm text-left text-gray-400">
               Address
             </p>
-            <h2 className="text-lg font-medium text-gray-100">{user?.address || 'Not Set'}</h2>
+            <h2 className="text-lg font-medium text-gray-100">{address || 'Not Set'}</h2>
           </div>
         </div>
 
@@ -110,9 +138,9 @@ const UserDetails: React.FC = () => {
             </p>
             <span className="text-lg font-medium">{dateOfBirth || "Not Set"}</span>
           </div>
-          <div>
+          {/* <div>
             <IoCalendarOutline className="h-6 w-6" />
-          </div>
+          </div> */}
         </div>
 
         <div className="w-[100%] rounded-lg p-4 mt-3 flex items-center justify-between" style={{ backgroundColor: "#1e1e1e" }}>
@@ -122,9 +150,9 @@ const UserDetails: React.FC = () => {
             </p>
             <span className="text-lg font-medium">{phoneNumber || "Not Set"}</span>
           </div>
-          <div>
+          {/* <div>
             {isVerified ? <GoVerified className="h-6 w-6 text-green-500" /> : <GoVerified className="h-6 w-6" /> }
-          </div>
+          </div> */}
         </div>
 
         {/* Edit Profile Section */}
@@ -209,6 +237,22 @@ const UserDetails: React.FC = () => {
                     />
                   </div>
                 </div>  
+
+                {/* Avatar Selection */}
+                <div className="flex flex-col items-start gap-2">
+                  <Label htmlFor="avatar">Choose Avatar</Label>
+                  <div className="flex gap-3 mt-3 flex-wrap">
+                    {avatars.map((avatar) => (
+                      <img
+                        key={avatar.id}
+                        src={avatar.src}
+                        alt="Avatar"
+                        className={`cursor-pointer h-12 w-12 rounded-md ${selectedAvatar === avatar.src ? "border-2 border-blue-500" : ""}`}
+                        onClick={() => setSelectedAvatar(avatar.src)}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
 
               <DialogFooter>
