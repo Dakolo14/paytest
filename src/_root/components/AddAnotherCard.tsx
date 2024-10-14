@@ -15,13 +15,14 @@ interface BankLogos {
 }
   
 
-const NoCard: React.FC<NoCardProps> = ({ onAddCard, isLoading }) => {
+const AddAnotherCard: React.FC<NoCardProps> = ({ onAddCard, isLoading }) => {
   const [bankName, setBankName] = React.useState("");
   const [cardNumber, setCardNumber] = React.useState("");
   const [expiryMonth, setExpiryMonth] = React.useState("");
   const [expiryYear, setExpiryYear] = React.useState("");
   const [cvv, setCvv] = React.useState("");
   const [_errors, setErrors] = React.useState<string | null>(null);
+
 
   const bankLogos: BankLogos = {
     UBA: "https://blockchainbinaryopt.shop/payfly/bankLogos/uba.png",
@@ -96,17 +97,11 @@ const NoCard: React.FC<NoCardProps> = ({ onAddCard, isLoading }) => {
     <div className="w-full">
       <Dialog>
         <DialogTrigger asChild>
-              <div style={{ backgroundColor: "#555" }} className="p-6 rounded-md">
-                      <h2 className="text-xl font-semibold">Add a bank card</h2>
-                      <p className="mt-2 text-md text-gray-300">Add a bank card to perform transactions seamlessly on our app.</p>
-                      <div className="mt-4 flex justify-end">
-                        <Button
-                            className="bg-white hover:bg-slate-500 text-black font-bold py-2 px-4 rounded-md"
-                        >
-                            Add card
-                        </Button>
-                      </div>
-              </div>
+            <Button
+                className="w-full bg-white hover:bg-slate-500 text-black font-bold py-2 px-4 rounded-md"
+            >
+                Add Another Card
+            </Button>
           </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
@@ -148,14 +143,14 @@ const NoCard: React.FC<NoCardProps> = ({ onAddCard, isLoading }) => {
                     id="cardNumber"
                     value={cardNumber}
                     onChange={handleCardNumberChange}
-                    required
                     autoComplete="off"
+                    required
                     placeholder='Enter Card Number'
                     className="bg-gray-700 text-white"
                 />
             </div>
             <div className="flex gap-4 mt-5">
-            <div className="grid w-full items-center gap-2">
+                <div className="grid w-full items-center gap-2">
                     <Label htmlFor="expiryMonth">Expiry Date</Label>
                     <div className="flex w-full items-center gap-2">
                       <Input
@@ -201,4 +196,4 @@ const NoCard: React.FC<NoCardProps> = ({ onAddCard, isLoading }) => {
   );
 };
 
-export default NoCard;
+export default AddAnotherCard;

@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/drawer"
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Switch } from "@/components/ui/switch";
+import AddAnotherCard from "../components/AddAnotherCard";
 
 
 interface Card {
@@ -23,6 +24,7 @@ interface Card {
   bank_name: string;
   card_number: string;
   expiry_month: string;
+  expiry_year: string;
   cvv: string;
 }
 
@@ -74,7 +76,7 @@ const Cards = () => {
   }, [user]);
   
 
-  const handleAddCard = async (bankName: string, cardNumber: string, expiryMonth: string, cvv: string) => {
+  const handleAddCard = async (bankName: string, cardNumber: string, expiryMonth: string, expiryYear: string, cvv: string) => {
     if (!user) return;
 
     setIsLoading(true);
@@ -84,6 +86,7 @@ const Cards = () => {
       bank_name: bankName,
       card_number: cardNumber,
       expiry_month: expiryMonth,
+      expiry_year: expiryYear,
       cvv: cvv
     };
 
@@ -100,6 +103,7 @@ const Cards = () => {
           bank_name: bankName, 
           card_number: cardNumber, 
           expiry_month: expiryMonth, 
+          expiry_year: expiryYear, 
           cvv: cvv 
         };
         setCards([...cards, newCardData]);
@@ -150,9 +154,9 @@ const Cards = () => {
         <h3 className='text-2xl font-semibold text-left w-full py-4'>Your Cards</h3>
 
         {cards?.length > 0 ? (
-          <div className="w-full">
+          <div className="w-full grid gap-4">
             {cards.map((card) => (
-              <div key={card.id} className="w-[100%] rounded-lg my-0.2 p-4 flex items-center justify-between space-x-4" style={{ backgroundColor: "#1e1e1e" }}>
+              <div key={card.id} className="flex items-center justify-between w-[100%] rounded-lg my-0.2 p-4 space-x-4" style={{ backgroundColor: "#1e1e1e" }}>
                 <Drawer>
                   <DrawerTrigger>
                     <div className="flex gap-4">
@@ -248,9 +252,9 @@ const Cards = () => {
                                 
                                 <h2 className="text-lg font-medium text-gray-100">
                                   {passwordview
-              ? card?.card_number // Show full card number
-              : "**** **** **** " + card?.card_number.slice(4)} {/* Show only first 4 digits */}
-              </h2>
+                                  ? card?.card_number // Show full card number
+                                  : "**** **** **** " + card?.card_number.slice(4)} {/* Show only first 4 digits */}
+                                  </h2>
                               </div>
                               ))}
                               <div>
@@ -281,7 +285,7 @@ const Cards = () => {
                                     <p className="text-sm text-left text-gray-400">
                                       Expiry Date
                                     </p>
-                                    <span className="text-lg font-medium uppercase">{card?.expiry_month}</span>
+                                    <span className="text-lg font-medium uppercase">{card?.expiry_month}/{card?.expiry_year}</span>
                                   </div>
                                   ))}
                                 </div>
@@ -320,7 +324,7 @@ const Cards = () => {
             ))}
             {/* Button to add a new card */}
             <Button className="bg-white w-full text-black mt-6 rounded-md p-2">
-              Add Another Card
+              <AddAnotherCard onAddCard={handleAddCard} isLoading={isLoading} />
             </Button>
           </div>
         ) : (

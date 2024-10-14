@@ -27,17 +27,17 @@ interface Card {
 }
 
 const cardImages = [
-  '/assets/images/card-design1.jpg', // URL of your first card design image
-  '/assets/images/card-design2.jpg', // URL of your second card design image
-  '/assets/images/card-design3.jpg', // URL of your third card design image
-  '/assets/images/card-design4.jpg', // URL of your third card design image
-  '/assets/images/card-design5.jpg', // URL of your third card design image
-  '/assets/images/card-design6.jpg', // URL of your third card design image
-  '/assets/images/card-design7.jpg', // URL of your third card design image
-  '/assets/images/card-design8.jpg', // URL of your third card design image
-  '/assets/images/card-design9.jpg', // URL of your third card design image
-  '/assets/images/card-design10.jpg', // URL of your third card design image
-  '/assets/images/card-design11.jpg', // URL of your third card design image
+  '/assets/images/card-design1.jpg',
+  '/assets/images/card-design2.jpg',
+  '/assets/images/card-design3.jpg',
+  '/assets/images/card-design4.jpg',
+  '/assets/images/card-design5.jpg',
+  '/assets/images/card-design6.jpg',
+  '/assets/images/card-design7.jpg',
+  '/assets/images/card-design8.jpg',
+  '/assets/images/card-design9.jpg',
+  '/assets/images/card-design10.jpg',
+  '/assets/images/card-design11.jpg',
 ];
 
 const Home = () => {
@@ -46,9 +46,13 @@ const Home = () => {
   const [_selectedCard, setSelectedCard] = useState<Card | null>(null);
   const [cardAdded, setCardAdded] = useState(false); // Initialize as false
   const [_cardColorMap, setCardColorMap] = useState<{ [key: number]: string }>({});
+  const [isLoading, setIsLoading] = useState(false);
   const [isPrimaryAccount] = useState(true);
-  const [selectedCardImage, setSelectedCardImage] = useState(cardImages[0]); // Default image
-  const [tempSelectedImage] = useState(cardImages[0]);
+  // Sample function to track the selected background image
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [tempSelectedIndex, setTempSelectedIndex] = useState(null);  // Tracks the image index temporarily before confirming
+  const [isOpen, setIsOpen] = useState(false);  // State to control drawer open/close
+
   
   useEffect(() => {
     if (user) {
@@ -108,10 +112,10 @@ const Home = () => {
 
   const defaultAvatar = './assets/avatar/avatar-1.png'
 
-  const bankName = 'Bank Name';
-  const cardNumber = '**** **** **** **38';
-  const cvv = '***';
-  const expiryDate = '**/**';
+  // const bankName = 'Bank Name';
+  // const cardNumber = '**** **** **** **38';
+  // const cvv = '***';
+  // const expiryDate = '**/**';
   // const accounts = [
   //   { id: 1, name: 'Primary Account', isActive: true },
   //   { id: 2, name: 'Secondary Account', isActive: false },
@@ -136,9 +140,19 @@ const Home = () => {
     return "unknown";
   };
 
+  // Handle the "Select Design" button click (confirms the background change)
   const handleSelectDesign = () => {
-    // Update the selected card image with the one chosen in the drawer
-    setSelectedCardImage(tempSelectedImage);
+    if (tempSelectedIndex !== null) {
+      setIsLoading(true);  // Start loading when selecting the design
+      setSelectedImageIndex(tempSelectedIndex);  // Update the selected image
+      setIsOpen(false);  // Close the drawer after selecting the design
+    }
+  };
+
+  // Handle selecting a background image (temp selection before confirming)
+  const handleImageClick = (index) => {
+    setTempSelectedIndex(index); // Set the temporary selected image index
+    setIsLoading(false);  // Immediately set isLoading to false when selecting an image
   };
 
   return (
@@ -175,7 +189,7 @@ const Home = () => {
             <div
               className="relative rounded-lg p-5 w-100vw"
               style={{
-                backgroundImage: `url(${selectedCardImage})`, // Background image based on selected design
+                backgroundImage: `url(${cardImages[selectedImageIndex]})`, // Background image based on selected design
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
               }}
@@ -235,7 +249,7 @@ const Home = () => {
             </div>
             <div className="mt-4 flex justify-between">
             
-            <Drawer>
+            <Drawer open={isOpen} onOpenChange={setIsOpen}>
               <DrawerTrigger className="text-sm text-white mb-2">Customize Card</DrawerTrigger>
               <DrawerContent>
                 <DrawerHeader>
@@ -249,56 +263,36 @@ const Home = () => {
                 <div className="flex-1 overflow-y-auto p-4">
                   {/* Scrollable content */}
                   <DrawerDescription>
-                    {cardImages.map((image, index) => (
-                      <div key={index} className="grid p-4 grid-flow-col w-full">
-                        <Checkbox id={`terms-${index}`} />
-                        <label
-                          htmlFor={`terms-${index}`}
-                          className="text-xxl font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                          <div
-                            className="relative rounded-lg p-5 w-100vw"
-                            style={{
-                              backgroundImage: `url(${image})`,
-                              backgroundSize: 'cover',
-                              backgroundPosition: 'center',
-                              height: '200px', // Set a fixed height for your card design
-                            }}
-                          >
-                            {/* Overlay using ::before */}
-                            <div className="absolute inset-0 bg-black opacity-60 rounded-lg"></div>
-                            
-                            <div className="relative z-10">
-                              <div className="flex justify-between items-start">
-                                <span className="text-md font-medium text-white">{bankName}</span>
-                                <img src={`/assets/images/payment-tag.png`} alt="NFC" className="h-8 w-8" />
-                              </div>
-                              <div className="text-lg tracking-widest mt-6 text-white">
-                                <p style={{ fontSize: '1.5rem' }}>{cardNumber}</p>
-                              </div>
-                              <div className="flex justify-start gap-4 mt-3">
-                                <div className="flex flex-col text-white">
-                                  <span className="text-xs pr-4">CVV</span>
-                                  <span className="text-sm">{cvv}</span>
-                                </div>
-                                <div className="flex flex-col text-white">
-                                  <span className="text-xs">Expires</span>
-                                  <span className="text-sm">{expiryDate}</span>
-                                </div>
-                              </div>
-                              <div className="flex justify-between items-center mt-4">
-                                <span className="text-lg font-medium uppercase text-white">{user?.first_name} {user?.last_name}</span>
-                                <img src="/assets/images/visa.png" alt="Card Type" className="h-6 w-10" />
-                              </div>
-                            </div>
-                          </div>
-                        </label>
-                      </div>
-                    ))}
+                    {/* Background selection */}
+                    <div className="grid grid-cols-3 gap-4 p-4">
+                      {cardImages.map((image, index) => (
+                        <div key={index} className="relative">
+                          <input
+                            type="radio"
+                            id={`image-${index}`}
+                            name="cardBackground"
+                            value={index}
+                            checked={tempSelectedIndex === index}
+                            onChange={() => handleImageClick(index)}
+                            className="hidden"
+                          />
+                          <label htmlFor={`image-${index}`} className="cursor-pointer">
+                            <img
+                              src={image}
+                              alt={`Card background ${index + 1}`}
+                              className={`rounded-lg ${
+                                tempSelectedIndex === index ? 'border-4 border-blue-500' : ''
+                              }`}
+                              style={{ height: '100px', width: '150px', objectFit: 'cover' }}
+                            />
+                          </label>
+                        </div>
+                      ))}
+                    </div>
                   </DrawerDescription>
                 </div>
                 <DrawerFooter>
-                  <Button className="bg-white text-dark-2" onClick={handleSelectDesign}>Select Design</Button>
+                  <Button className="bg-white text-dark-2" onClick={handleSelectDesign} disabled={tempSelectedIndex === null}>{isLoading ? 'Selecting Design...' : 'Select Design'}</Button>
                   <DrawerClose>
                     <Button variant="outline" className="w-full">Cancel</Button>
                   </DrawerClose>

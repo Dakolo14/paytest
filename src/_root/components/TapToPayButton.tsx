@@ -26,6 +26,7 @@ const TapToPayButton = () => {
     const [pin, setPin] = useState('');
     const { user } = useUser(); // Get user from context
     const [isLoading, setIsLoading] = useState(false);
+    const [_nfcSupported, setNfcSupported] = useState(false);
 
   
     const handleBackspace = () => {
@@ -61,6 +62,9 @@ const TapToPayButton = () => {
             title: 'PIN verified successfully!',
           })
           // Proceed with the next steps after successful verification
+          // Initiate NFC reader if supported
+          checkNfcSupport();
+
         } else {
           toast({
             variant: 'destructive',
@@ -77,7 +81,11 @@ const TapToPayButton = () => {
             title: 'An error occurred while communicating with the server. Please try again.',
           })
         } else if (error instanceof z.ZodError) {
-          alert(error.errors[0].message); // Display validation error message
+          // alert(error.errors[0].message); // Display validation error message
+          toast({
+            variant: 'destructive',
+            title: 'PIN must be exactly 4 digits.',
+          })
         } else {
           console.error('Unexpected error:', error);
           // alert('An unexpected error occurred. Please try again.');
@@ -89,6 +97,47 @@ const TapToPayButton = () => {
       } finally {
         setIsLoading(false);
       }
+    };
+
+    // Function to check NFC support
+    const checkNfcSupport = () => {
+      if ('NDEFReader' in window) {
+        setNfcSupported(true);
+        openNfcReader();
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'NFC is not supported on this device/browser.',
+        });
+      }
+    };
+
+    // Function to open NFC reader
+    const openNfcReader = async () => {
+        try {
+            const ndef = new NDEFReader();
+            await ndef.scan();
+            toast({
+                variant: 'success',
+                title: 'NFC scanning started. Hold your NFC tag/device close.',
+            });
+    
+            // Use the correct type for the event
+            ndef.addEventListener('reading', (event: NDEFReadingEvent) => {
+                const { serialNumber } = event;
+                toast({
+                    variant: 'success',
+                    title: `NFC tag detected: ${serialNumber}`,
+                });
+                console.log(`NFC tag detected: ${serialNumber}`);
+            });
+        } catch (error) {
+            console.error('Error with NFC:', error);
+            toast({
+                variant: 'destructive',
+                title: 'Failed to start NFC scan. Please try again.',
+            });
+        }
     };
 
   return (
@@ -118,7 +167,7 @@ const TapToPayButton = () => {
                 </div>
                 </DrawerHeader>
                 <DrawerFooter className="sticky bottom-0 bg-dark p-4">
-                    <Button className="bg-white text-dark-2 font-semibold" onClick={handleAuthorize} disabled={isLoading}>
+                    <Button className="bg-white text-dark-2 font-semibold" onClick={handleAuthorize} disabled={isLoading || pin.length !== 4}>
                       {isLoading ? 'Authorizing Payment...' : 'Authorize Payment'}</Button>
                     <DrawerClose>
                       <Button variant="outline" className="w-full">Cancel</Button>

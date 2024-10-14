@@ -13,7 +13,7 @@ import { UserDetails, ResetPin, Referrals, HelpSupport, WhatsNew, Faq, Terms, Pr
 
 const App = () => {
   return (
-    <main className="flex h-screen">
+    <main className="flex h-[100%]">
         <Routes>
             {/* Public Routes: accessible to everyone */}
             <Route element={<AuthLayout />}>
