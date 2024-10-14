@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import axios from "axios";
 import { useUser } from '@/lib/context/UserContexts';
 import { Link } from "react-router-dom";
@@ -50,7 +50,7 @@ const Home = () => {
   const [isPrimaryAccount] = useState(true);
   // Sample function to track the selected background image
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [tempSelectedIndex, setTempSelectedIndex] = useState(null);  // Tracks the image index temporarily before confirming
+  const [tempSelectedIndex, setTempSelectedIndex] = useState<number | null>(null);  // Tracks the image index temporarily before confirming
   const [isOpen, setIsOpen] = useState(false);  // State to control drawer open/close
 
   
@@ -149,10 +149,13 @@ const Home = () => {
     }
   };
 
-  // Handle selecting a background image (temp selection before confirming)
-  const handleImageClick = (index) => {
-    setTempSelectedIndex(index); // Set the temporary selected image index
-    setIsLoading(false);  // Immediately set isLoading to false when selecting an image
+  const handleImageClick = (index: number) => {
+    if (index !== undefined && index !== null) {
+      setTempSelectedIndex(index); // Set the temporary selected image index
+      setIsLoading(false);  // Immediately set isLoading to false when selecting an image
+    } else {
+      console.error('Invalid index value:', index);
+    }
   };
 
   return (
