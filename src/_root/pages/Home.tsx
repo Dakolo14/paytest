@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useUser } from '@/lib/context/UserContexts';
 import { Link } from "react-router-dom";
